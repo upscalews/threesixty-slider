@@ -162,19 +162,22 @@
       });
     };
     /**
-     * @method loadImages
+     * @method imageLoaded
      * @private
      * The function gets triggers once the image is loaded. We also update
      * the progress percentage in this function.
      */
     base.imageLoaded = function () {
       AppCongif.loadedImages += 1;
-      $(AppCongif.progress + ' span').text(Math.floor(AppCongif.loadedImages / AppCongif.totalFrames * 100) + '%');
+
+      var $progress = base.$el.find(AppCongif.progress);
+
+      $progress.find('span').text(Math.floor(AppCongif.loadedImages / AppCongif.totalFrames * 100) + '%');
       if (AppCongif.loadedImages >= AppCongif.totalFrames) {
         if(AppCongif.disableSpin) {
           frames[0].removeClass('previous-image').addClass('current-image');
         }
-        $(AppCongif.progress).fadeOut('slow', function () {
+        $progress.fadeOut('slow', function () {
           $(this).hide();
           base.showImages();
           base.showNavigation();
